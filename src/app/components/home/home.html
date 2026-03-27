@@ -1,0 +1,72 @@
+<!-- <h1 class="text-center my-5">Total registered courses price : {{ totalPrice }}</h1> -->
+
+<div class="mb-5 m-auto w-75 text-center">
+  <label for="">Filter by category</label>
+  <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedCategoryId">
+    <option value="0">All</option>
+    @for (category of categories; track category.id) {
+      <option [value]="category.id">{{ category.name }}</option>
+    }
+  </select>
+</div>
+
+<div class="row row-cols-1 row-cols-md-4 g-4 m-5 text-center">
+  @for (course of courses; track course.id) {
+    <div class="col" [class.d-none]="course.catId != selectedCategoryId && selectedCategoryId != 0">
+      <div class="card">
+        <img
+          [src]="course.image"
+          class="card-img-top"
+          width="100"
+          height="300"
+          alt="course image"
+        />
+        <div
+          class="card-body"
+          [ngStyle]="{
+            'background-color': course.seat == 0 ? 'red' : course.seat <= 2 ? 'yellow' : 'white',
+          }"
+        >
+          <h5 class="card-title">course id : {{ course.id }}</h5>
+          <h5 class="card-title">course title : {{ course.title }}</h5>
+          <h5 class="card-title">instructor name : {{ course.instructor }}</h5>
+          <h5 class="card-title">course price : {{ course.price }}</h5>
+          @if (course.seat === 0) {
+            <h5 class="card-title">Full</h5>
+          } @else if (course.seat <= 2) {
+            <h5 class="card-title">Almost full , Only {{ course.seat }} is availabe</h5>
+          } @else {
+            <h5 class="card-title">Available seats : {{ course.seat }}</h5>
+          }
+          <button
+            class="btn btn-primary"
+            (click)="register(course.id)"
+            [disabled]="course.seat === 0"
+          >
+            register
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- 
+data binding and its types
+one way =>from ts to html => interpolation , property binding , event binding from html to ts
+two way binding =>from controller to view and view to controller
+ -->
+
+<!-- 
+ directives : [
+ => directives is props and elements are declared in Angular 
+  built in directives : [
+      - component directives => selector name , tag used to display componnent , its name like selector will be displayed , can be self closes , differe on content projection
+      - attribute directive => directive to change dom by adding or removing dom , three and deprecated ngfor , *nglf , ngswitch , no @for has empty section , track , unique , why ? for loop variables ,@if,@switch => called control flow
+      - structural directive
+  ],
+  -difference between d-none and if to hide elements 
+  custom directives : [
+  ]
+ ]
+  -->
