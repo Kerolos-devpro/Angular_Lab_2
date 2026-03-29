@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { ICourse } from '../../models/icourse';
 import { ICategory } from '../../models/icategory';
 import { FormsModule } from '@angular/forms';
-import { NgStyle } from '@angular/common';
+import { CurrencyPipe, NgStyle } from '@angular/common';
+
+import { ShortenPipe } from '../../pipes/shorten-pipe';
+import { DiscountPipe } from '../../pipes/discount-pipe';
+import { AppDisableAfterClick } from '../../directives/app-disable-after-click';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, NgStyle],
+  imports: [FormsModule, ShortenPipe, DiscountPipe, AppDisableAfterClick],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
